@@ -112,6 +112,8 @@ public class MyDragLayerLayout<T> extends FrameLayout {
     private int type=TYPE_HOME;
     private  FROMTYPE fromType=FROMTYPE.UNDEFINE;
     private boolean packed=false;
+    private long SWAP_TIME=600;
+    private long INSERT_GAP=150;
     //private int fromFolderPos;
     public void setDragPageRange(int dragPageRangeStart, int dragPageRangeEnd) {
         mDragPageRangeStart = dragPageRangeStart;
@@ -298,9 +300,11 @@ public class MyDragLayerLayout<T> extends FrameLayout {
             if(out&&fromType==FROMTYPE.UNDEFINE&&!packed){
                 packed=true;
                 mDragPosition.unPack(mDragView, mItemStartPosition);
+                onSwap=true;
+                mHandler.removeMessages(UPDATE_SWAP_FLAG);
                 return;
             }
-            if (tmp == -1 || tmp == mItemStartPosition ) {
+            if (tmp == -1 || tmp == mItemStartPosition||mRecyclerViewScrollState!=RECYCLER_VIEW_SCROLL_IDLE ) {
                 mHandler.removeMessages(UPDATE_SWAP_FLAG);
                 return;
             }
@@ -329,7 +333,7 @@ public class MyDragLayerLayout<T> extends FrameLayout {
             int centerY=view.getBottom()-view.getHeight()/2;
             int dx= (int) Math.abs(x-centerX);
             int dy= (int) Math.abs(y-centerY);
-            if(dx<=200&&dy<=200){
+            if(dx<=INSERT_GAP&&dy<=INSERT_GAP){
                 return true;
             }
             return false;
@@ -340,7 +344,7 @@ public class MyDragLayerLayout<T> extends FrameLayout {
         message.what=UPDATE_SWAP_FLAG;
         message.obj=false;
 
-        mHandler.sendMessageDelayed(message,400);
+        mHandler.sendMessageDelayed(message,SWAP_TIME);
     }
 
 
@@ -370,6 +374,9 @@ public class MyDragLayerLayout<T> extends FrameLayout {
         mCurrentX = SLIDE_EDGE + SLIDE_CRITICAL;
         this.fromType=FROMTYPE.UNDEFINE;
         this.packed=false;
+
+        mHandler.removeMessages(UPDATE_SWAP_FLAG);
+        onSwap=true;
     }
 
     private void resetHandler() {

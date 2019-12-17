@@ -92,7 +92,7 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        for(int i=0;i<10;i++){
+        for(int i=0;i<20;i++){
             HomeDataBean homeDataBean=new HomeDataBean();
             HomeDataBean.DataBean dataBean=new HomeDataBean.DataBean();
             dataBean.setName("设备"+i);
