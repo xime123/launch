@@ -113,7 +113,7 @@ public class MyDragLayerLayout<T> extends FrameLayout {
     private  FROMTYPE fromType=FROMTYPE.UNDEFINE;
     private boolean packed=false;
     private long SWAP_TIME=600;
-    private long INSERT_GAP=150;
+    private long INSERT_GAP=100;
     //private int fromFolderPos;
     public void setDragPageRange(int dragPageRangeStart, int dragPageRangeEnd) {
         mDragPageRangeStart = dragPageRangeStart;
@@ -802,8 +802,9 @@ public class MyDragLayerLayout<T> extends FrameLayout {
         }
         mDragSnapShot = Utils.getViewSnapshot(childView, 0xFF);
         mDragSnapShotEdge = Utils.getViewSnapshot(childView, 0xFF);
+        int dGap=(type==TYPE_HOME?0:100);
 
-        mDrawRegion.set(mLastX-childView.getWidth()/2, mLastY-childView.getHeight()/2-100, mLastX + childView.getWidth()/2, mLastY + childView.getHeight()/2-100);
+        mDrawRegion.set(mLastX-childView.getWidth()/2, mLastY-childView.getHeight()/2-dGap, mLastX + childView.getWidth()/2, mLastY + childView.getHeight()/2-dGap);
         childView.setVisibility(INVISIBLE);
         postInvalidate();
     }
