@@ -113,7 +113,7 @@ public class MyDragLayerLayout<T> extends FrameLayout {
     private  FROMTYPE fromType=FROMTYPE.UNDEFINE;
     private boolean packed=false;
     private long SWAP_TIME=600;
-    private long INSERT_GAP=100;
+    private long INSERT_GAP=150;
     //private int fromFolderPos;
     public void setDragPageRange(int dragPageRangeStart, int dragPageRangeEnd) {
         mDragPageRangeStart = dragPageRangeStart;
@@ -160,8 +160,12 @@ public class MyDragLayerLayout<T> extends FrameLayout {
         }
         mDragSnapShot = Utils.getViewSnapshot(childView, 0xFF);
         mDragSnapShotEdge = Utils.getViewSnapshot(childView, 0xFF);
+        if(type==TYPE_PACKAGE){
+            mDrawRegion.set(childView.getX(), childView.getY(), childView.getX() + childView.getWidth(), childView.getY() + childView.getHeight());
+        }else {
+            mDrawRegion.set(mLastX-childView.getWidth()/2, mLastY-childView.getHeight()/2, mLastX + childView.getWidth()/2, mLastY + childView.getHeight()/2);
 
-        mDrawRegion.set(childView.getX(), childView.getY(), childView.getX() + childView.getWidth(), childView.getY() + childView.getHeight());
+        }
         mDrawRegion.offset(offsetX, offsetY);
         mDragState = DRAG_STATE_START;
         Utils.vibrate(getContext());
@@ -524,7 +528,9 @@ public class MyDragLayerLayout<T> extends FrameLayout {
 
     private Object [] findInsertOrSwapPosition(float x, float y) {
         y = y - mTopOffset;
-        x=x- ScreenUtils.dpToPx(42);
+        if(type==TYPE_PACKAGE){
+            x=x- ScreenUtils.dpToPx(42);
+        }
         int result = -1;
         boolean canInsert=false;
         Object []valus=new Object[]{result,canInsert};
@@ -802,7 +808,7 @@ public class MyDragLayerLayout<T> extends FrameLayout {
         }
         mDragSnapShot = Utils.getViewSnapshot(childView, 0xFF);
         mDragSnapShotEdge = Utils.getViewSnapshot(childView, 0xFF);
-        int dGap=(type==TYPE_HOME?0:100);
+        int dGap=(type==TYPE_HOME?100:0);
 
         mDrawRegion.set(mLastX-childView.getWidth()/2, mLastY-childView.getHeight()/2-dGap, mLastX + childView.getWidth()/2, mLastY + childView.getHeight()/2-dGap);
         childView.setVisibility(INVISIBLE);
