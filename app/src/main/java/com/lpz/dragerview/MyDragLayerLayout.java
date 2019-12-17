@@ -808,7 +808,7 @@ public class MyDragLayerLayout<T> extends FrameLayout {
         }
         mDragSnapShot = Utils.getViewSnapshot(childView, 0xFF);
         mDragSnapShotEdge = Utils.getViewSnapshot(childView, 0xFF);
-        int dGap=(type==TYPE_HOME?100:0);
+        int dGap=(fromType==FROMTYPE.FROM_HOME?100:0);
 
         mDrawRegion.set(mLastX-childView.getWidth()/2, mLastY-childView.getHeight()/2-dGap, mLastX + childView.getWidth()/2, mLastY + childView.getHeight()/2-dGap);
         childView.setVisibility(INVISIBLE);
