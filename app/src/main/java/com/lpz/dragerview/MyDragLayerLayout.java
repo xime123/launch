@@ -169,7 +169,7 @@ public class MyDragLayerLayout<T> extends FrameLayout {
         mDrawRegion.offset(offsetX, offsetY);
         mDragState = DRAG_STATE_START;
         Utils.vibrate(getContext());
-        childView.setVisibility(INVISIBLE);
+        mDragView.setVisibility(INVISIBLE);
         postInvalidate();
 
         if (mDragCallback != null) {

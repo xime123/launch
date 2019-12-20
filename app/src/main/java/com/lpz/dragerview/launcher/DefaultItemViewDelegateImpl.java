@@ -1,6 +1,7 @@
 package com.lpz.dragerview.launcher;
 
 import android.content.Context;
+import android.view.View;
 
 
 import com.lpz.dragerview.R;
@@ -34,7 +35,7 @@ public class DefaultItemViewDelegateImpl  implements ItemViewDelegate<HomeDataBe
     @Override
     public void convert(final ViewHolder holder, final HomeDataBean o, int position) {
 
-
+        holder.getConvertView().setVisibility(o.isNeedHide()? View.INVISIBLE:View.VISIBLE);
         holder.setText(R.id.tv_device_name, o.getDataBean().getName());
 
     }

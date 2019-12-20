@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -173,6 +174,10 @@ public class LauncherActivity extends AppCompatActivity {
         @Override
         public void onDrop(View dragView, int startPosition, int lastPosition, int currentPosition, boolean out) {
             dragView.setVisibility(View.VISIBLE);
+            for(HomeDataBean homeDataBean:homeList){
+                homeDataBean.setNeedHide(false);
+            }
+            launcherAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -180,11 +185,14 @@ public class LauncherActivity extends AppCompatActivity {
             if (startPosition == currentPosition) {
                 return;
             }
+            Log.i("mTest","onSwap==startPosition="+startPosition+" currentPosition="+currentPosition);
             if (currentPosition > homeList.size() - 1)
                 currentPosition = homeList.size() - 1;
 
             int fromIndex = startPosition;
             int toIndex = currentPosition;
+            HomeDataBean homeDataBean=homeList.get(fromIndex);
+            homeDataBean.setNeedHide(true);
             if (fromIndex < toIndex) {
                 if (toIndex >= homeList.size()) return;
                 for (int i = fromIndex; i < toIndex; i++) {

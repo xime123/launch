@@ -6,7 +6,7 @@ import java.util.Objects;
 public class HomeDataBean {
     private DataBean dataBean;
     private FolderBean folderBean;
-
+    private boolean needHide;
     public static class FolderBean{
        private List<DataBean> nameList;
 
@@ -68,5 +68,13 @@ public class HomeDataBean {
 
             return Objects.hash(getName());
         }
+    }
+
+    public boolean isNeedHide() {
+        return needHide;
+    }
+
+    public void setNeedHide(boolean needHide) {
+        this.needHide = needHide;
     }
 }
