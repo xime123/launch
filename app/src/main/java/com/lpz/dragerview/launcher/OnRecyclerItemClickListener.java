@@ -51,6 +51,7 @@ public abstract class OnRecyclerItemClickListener implements RecyclerView.OnItem
         public void onLongPress(MotionEvent e) {
             View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
             if (child != null) {
+                //这里可以做延时
                 RecyclerView.ViewHolder vh = recyclerView.getChildViewHolder(child);
                 onItemLongClick(vh,vh.getAdapterPosition());
             }
